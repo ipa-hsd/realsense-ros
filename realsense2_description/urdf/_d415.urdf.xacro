@@ -50,7 +50,7 @@ aluminum peripherial evaluation case.
 
     <!-- camera body, with origin at bottom screw mount -->
     <joint name="${name}_joint" type="fixed">
-      <xacro:insert_block name="origin" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="${parent}"/>
       <child link="${name}_bottom_screw_frame" />
     </joint>
@@ -65,19 +65,11 @@ aluminum peripherial evaluation case.
 
     <link name="${name}_link">
       <visual>
-        <xacro:if value="${use_mesh}">
-          <origin xyz="${d415_cam_mount_from_center_offset} ${-d415_cam_depth_py} 0" rpy="${M_PI/2} 0 ${M_PI/2}"/>
-          <geometry>
-            <mesh filename="file://$(find realsense2_description)/meshes/d415.stl" />
-          </geometry>
-          <material name="aluminum"/>
-        </xacro:if>
-        <xacro:unless value="${use_mesh}">
-          <origin xyz="0 ${-d415_cam_depth_py} 0" rpy="0 0 0"/>
-          <geometry>
-            <box size="${d415_cam_depth} ${d415_cam_width} ${d415_cam_height}"/>
-          </geometry>
-        </xacro:unless>     
+        <origin xyz="${d415_cam_mount_from_center_offset} ${-d415_cam_depth_py} 0" rpy="${M_PI/2} 0 ${M_PI/2}"/>
+        <geometry>
+          <mesh filename="file://$(find realsense2_description)/meshes/d415.stl" />
+        </geometry>
+        <material name="aluminum"/>
       </visual>
       <collision>
         <origin xyz="0 ${-d415_cam_depth_py} 0" rpy="0 0 0"/>
@@ -154,12 +146,6 @@ aluminum peripherial evaluation case.
         <child link="${name}_color_optical_frame" />
       </joint>
       <link name="${name}_color_optical_frame"/>
-    </xacro:if>
-
-    <xacro:if value="${add_plug}">
-      <xacro:usb_plug parent="${name}_link" name="${name}_usb_plug">
-        <origin xyz="${d415_cam_mount_from_center_offset - 0.01587} ${-d415_cam_depth_py - 0.0358} 0" rpy="0 0 0"/>
-      </xacro:usb_plug>
     </xacro:if>
   </xacro:macro>
 </robot>
